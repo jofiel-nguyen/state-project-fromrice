@@ -11,7 +11,6 @@ function ProductList() {
   const [state, dispatch] = useStoreContext();
 
   const { currentCategory } = state;
-
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
   useEffect(() => {
@@ -33,6 +32,7 @@ function ProductList() {
     }
   }, [data, loading, dispatch]);
 
+  // Filter products based on the selected category
   function filterProducts() {
     if (!currentCategory) {
       return state.products;
@@ -48,6 +48,7 @@ function ProductList() {
       <h2>Our Products:</h2>
       {state.products.length ? (
         <div className="flex-row">
+          {/* Use filterProducts() instead of state.products */}
           {filterProducts().map((product) => (
             <ProductItem
               key={product._id}
@@ -62,6 +63,7 @@ function ProductList() {
       ) : (
         <h3>You haven't added any products yet!</h3>
       )}
+
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>
   );
