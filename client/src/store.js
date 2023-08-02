@@ -1,4 +1,4 @@
-import {createStore} from 'https://cdn.skypack.dev/react-redux';
+import {createStore} from 'redux';
 
 import { reducer } from './utils/reducers'; 
 const initialState = {
