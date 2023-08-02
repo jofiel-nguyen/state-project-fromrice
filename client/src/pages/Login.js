@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux'; // Importing Redux useDispatch hook
+
 import { LOGIN } from '../utils/mutations';
-import Auth from '../utils/auth';
 
 function Login(props) {
+  const dispatch = useDispatch(); // Using Redux useDispatch hook
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN);
 
@@ -15,7 +17,9 @@ function Login(props) {
         variables: { email: formState.email, password: formState.password },
       });
       const token = mutationResponse.data.login.token;
-      Auth.login(token);
+
+      // Dispatch action to update the auth state in the Redux store
+      dispatch({ type: 'LOGIN_SUCCESS', payload: token });
     } catch (e) {
       console.log(e);
     }
